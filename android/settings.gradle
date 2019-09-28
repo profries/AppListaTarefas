@@ -1,0 +1,3 @@
+rootProject.name = 'appListaTarefas'
+
+include ':app'
