@@ -7,7 +7,7 @@ const Item = ({title}) => (
     </View>
 );
 
-export default class App extends Component {
+export default class Main extends Component {
   tarefas = [
     { id:1, tarefa:'Tarefa 1' },
     { id:2, tarefa:'Tarefa 2' },
