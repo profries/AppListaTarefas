@@ -18,7 +18,11 @@ const Item = ({title, selecionado, onPress, onLongPress}) => {
   
 )};
 
-export default class Main extends Component {
+export default class MainScreen extends Component {
+  static navigationOptions = {
+    title:'Lista de Tarefas'
+  };
+
   state = {
     tarefas: [
       { id:1, tarefa:'Tarefa 1', selecionado: false },
@@ -38,8 +42,8 @@ export default class Main extends Component {
     // console.log(this.state);
   }
 
-  mostrarAlerta = (id) => {
-    alert(id);
+  mostrarTarefa = (id) => {
+    this.props.navigation.navigate('Tarefa', {'id':id});
   }
 
   render() {
@@ -52,7 +56,7 @@ export default class Main extends Component {
           renderItem={
             ({item}) => <Item title={item.tarefa} selecionado={item.selecionado}
               onPress={()=>this.selecionar(item.id)}
-              onLongPress={()=>this.mostrarAlerta(item.id)}/>
+              onLongPress={()=>this.mostrarTarefa(item.id)}/>
           }
           />
       </View>
