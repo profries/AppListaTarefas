@@ -23,7 +23,7 @@ export default class Main extends Component {
       <View style={styles.container}> 
         <FlatList style={styles.list}
           data = {this.tarefas}
-          keyExtractor = {item => item.id}
+          keyExtractor = {item => item.id.toString()}
           renderItem={
             ({item}) => <Item title={item.tarefa} />
           }
