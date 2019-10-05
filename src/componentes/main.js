@@ -1,31 +1,40 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, Text, View} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, FlatList, Text, View} from 'react-native';
 
-const Item = ({title}) => (
+const Item = ({title, onPress}) => (
+  <TouchableWithoutFeedback onPress={onPress}>
     <View style={styles.itemContainer}>
       <Text style={styles.itemText}>{title}</Text>
     </View>
+    </TouchableWithoutFeedback> 
 );
 
 export default class Main extends Component {
-  tarefas = [
-    { id:1, tarefa:'Tarefa 1' },
-    { id:2, tarefa:'Tarefa 2' },
-    { id:3, tarefa:'Tarefa 3' },
-    { id:4, tarefa:'Tarefa 4' },
-    { id:5, tarefa:'Tarefa 5' },
-    { id:6, tarefa:'Tarefa 6' },
-  ];
+  state = {
+    tarefas: [
+      { id:1, tarefa:'Tarefa 1', selecionado: false },
+      { id:2, tarefa:'Tarefa 2', selecionado: false },
+      { id:3, tarefa:'Tarefa 3', selecionado: false },
+      { id:4, tarefa:'Tarefa 4', selecionado: false },
+      { id:5, tarefa:'Tarefa 5', selecionado: false },
+      { id:6, tarefa:'Tarefa 6', selecionado: false },
+    ]
+  };
   
+  selecionar=(id)=>{
+    alert(id);
+    //let tarefas = this.state.tarefas;
+    //tarefas.find(item)
+  }
 
   render() {
     return (
       <View style={styles.container}> 
         <FlatList style={styles.list}
-          data = {this.tarefas}
+          data = {this.state.tarefas}
           keyExtractor = {item => item.id.toString()}
           renderItem={
-            ({item}) => <Item title={item.tarefa} />
+            ({item}) => <Item title={item.tarefa} onPress={()=>this.selecionar(item.id)}/>
           }
           />
       </View>
