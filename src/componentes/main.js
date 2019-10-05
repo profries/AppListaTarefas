@@ -1,13 +1,22 @@
 import React, {Component} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, FlatList, Text, View} from 'react-native';
 
-const Item = ({title, onPress}) => (
-  <TouchableWithoutFeedback onPress={onPress}>
+const Item = ({title, selecionado, onPress, onLongPress}) => {
+  console.log(selecionado);
+  return (
+  <TouchableWithoutFeedback onPress={onPress}
+    onLongPress={onLongPress}>
     <View style={styles.itemContainer}>
-      <Text style={styles.itemText}>{title}</Text>
+      <Text style={ selecionado 
+          ?styles.itemTextSelecionado
+          :styles.itemText
+        }>
+        {title}
+      </Text>
     </View>
     </TouchableWithoutFeedback> 
-);
+  
+)};
 
 export default class Main extends Component {
   state = {
@@ -22,9 +31,15 @@ export default class Main extends Component {
   };
   
   selecionar=(id)=>{
+    let tarefas = this.state.tarefas;
+    let tarefa = tarefas.find((tarefa) => tarefa.id == id);
+    tarefa.selecionado = !tarefa.selecionado;
+    this.setState({tarefas: tarefas});
+    // console.log(this.state);
+  }
+
+  mostrarAlerta = (id) => {
     alert(id);
-    //let tarefas = this.state.tarefas;
-    //tarefas.find(item)
   }
 
   render() {
@@ -32,9 +47,12 @@ export default class Main extends Component {
       <View style={styles.container}> 
         <FlatList style={styles.list}
           data = {this.state.tarefas}
+          extraData = {this.state}
           keyExtractor = {item => item.id.toString()}
           renderItem={
-            ({item}) => <Item title={item.tarefa} onPress={()=>this.selecionar(item.id)}/>
+            ({item}) => <Item title={item.tarefa} selecionado={item.selecionado}
+              onPress={()=>this.selecionar(item.id)}
+              onLongPress={()=>this.mostrarAlerta(item.id)}/>
           }
           />
       </View>
@@ -62,20 +80,11 @@ const styles = StyleSheet.create({
      fontSize:20,
      fontWeight:'bold',
      color:'#333'
-   }
+   },
+   itemTextSelecionado: {
+    fontSize:20,
+    textDecorationLine: 'line-through',
+    color:'#888'
+   },
+
 });
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#F5FCFF',
-//   },
-//   welcome: {
-//     fontSize: 20,
-//     textAlign: 'center',
-//     margin: 10,
-//   },
-//   instructions: {
-//     textAlign: 'center',
-//     color: '#333333',
-//     marginBottom: 5,
-//   },
-// });
